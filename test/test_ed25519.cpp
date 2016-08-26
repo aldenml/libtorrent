@@ -58,16 +58,16 @@ namespace
 		std::vector<unsigned char> msg(msg_size);
 
 		from_hex(seed, s);
-		ed25519_create_keypair(pk, sk, s);
+		ed25519::ed25519_create_keypair(pk, sk, s);
 
 		TEST_EQUAL(aux::to_hex({reinterpret_cast<char const*>(pk), 32}), pub);
 
 		from_hex(message, msg.data());
-		ed25519_sign(sig, msg.data(), msg_size, pk, sk);
+		ed25519::ed25519_sign(sig, msg.data(), msg_size, pk, sk);
 
 		TEST_EQUAL(aux::to_hex({reinterpret_cast<char const*>(sig), 64}), signature);
 
-		int r = ed25519_verify(sig, msg.data(), msg_size, pk);
+		int r = ed25519::ed25519_verify(sig, msg.data(), msg_size, pk);
 
 		TEST_CHECK(r);
 	}
@@ -173,5 +173,9 @@ TORRENT_TEST(ed25519_test_vec1)
 		  "57db938eac73e0af6d31206b3948f8c48a447308"
 	);
 }
-
+#else
+TORRENT_TEST(empty)
+{
+	TEST_CHECK(true);
+}
 #endif // TORRENT_DISABLE_DHT

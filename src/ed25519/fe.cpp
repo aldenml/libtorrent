@@ -3,7 +3,6 @@
 
 #include "libtorrent/ed25519/fixedint.hpp"
 #include "libtorrent/ed25519/fe.hpp"
-
 namespace libtorrent { namespace ed25519 {
 
 #ifdef _MSC_VER

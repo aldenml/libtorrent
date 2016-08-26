@@ -1053,9 +1053,9 @@ void test_put(address(&rand_addr)())
 		std::fprintf(stderr, "\nTEST GET/PUT%s \ngenerating ed25519 keys\n\n"
 			, with_salt ? " with-salt" : " no-salt");
 		unsigned char seed[32];
-		ed25519_create_seed(seed);
+		ed25519::ed25519_create_seed(seed);
 
-		ed25519_create_keypair((unsigned char*)pk.bytes.data()
+		ed25519::ed25519_create_keypair((unsigned char*)pk.bytes.data()
 			, (unsigned char*)sk.bytes.data(), seed);
 		std::fprintf(stderr, "pub: %s priv: %s\n"
 			, aux::to_hex(pk.bytes).c_str()

@@ -3,7 +3,6 @@
 
 #include "libtorrent/ed25519/fixedint.hpp"
 #include "libtorrent/ed25519/sc.hpp"
-
 namespace libtorrent { namespace ed25519 {
 
 static u64 load_3(const unsigned char *in) {
@@ -812,5 +811,4 @@ void sc_muladd(unsigned char *s, const unsigned char *a, const unsigned char *b,
     s[30] = (unsigned char) ((s11 >> 9) & 0xff);
     s[31] = (unsigned char) ((s11 >> 17) & 0xff);
 }
-
 }}

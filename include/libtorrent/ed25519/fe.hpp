@@ -40,5 +40,4 @@ void fe_pow22523(fe out, const fe z);
 void fe_sub(fe h, const fe f, const fe g);
 
 }}
-
 #endif
