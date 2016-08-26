@@ -12,3 +12,4 @@ void sc_muladd(unsigned char *s, const unsigned char *a, const unsigned char *b,
 
 }}
 #endif
+

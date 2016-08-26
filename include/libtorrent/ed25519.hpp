@@ -1,9 +1,19 @@
-#ifndef ED25519_HPP
-#define ED25519_HPP
+#ifndef LIBTORRENT_ED25519_HPP
+#define LIBTORRENT_ED25519_HPP
 
-#include "libtorrent/export.hpp" // for TORRENT_EXPORT
-#include <stddef.h> // for size_t
-namespace libtorrent { namespace ed25519 {
+#include <libtorrent/config.hpp>
+#include <libtorrent/span.hpp>
+
+#include <array>
+#include <memory>
+
+namespace libtorrent {
+namespace ed25519
+{
+	using ed25519_seed = std::array<char, 32>;
+
+	TORRENT_EXPORT void ed25519_create_seed(ed25519_seed& seed);
+
 enum
 {
 	ed25519_seed_size = 32,
@@ -16,10 +26,6 @@ enum
 
 extern "C" {
 
-#ifndef ED25519_NO_SEED
-void TORRENT_EXPORT ed25519_create_seed(unsigned char *seed);
-#endif
-
 // TODO: 3 wrap these into C++ calls with proper types (dht::signature,
 // public_key and secret_key)
 void TORRENT_EXPORT ed25519_create_keypair(unsigned char *public_key, unsigned char *private_key, const unsigned char *seed);
@@ -30,5 +36,4 @@ void TORRENT_EXPORT ed25519_key_exchange(unsigned char *shared_secret, const uns
 
 }
 }}
-#endif // ED25519_HPP
-
+#endif // LIBTORRENT_ED25519_HPP
