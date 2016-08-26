@@ -6,6 +6,8 @@
 #include "libtorrent/config.hpp"
 #include "libtorrent/ed25519.hpp"
 
+namespace libtorrent { namespace ed25519 {
+
 #ifndef ED25519_NO_SEED
 
 #if TORRENT_USE_CRYPTOGRAPHIC_BUFFER
@@ -60,4 +62,4 @@ void ed25519_create_seed(unsigned char *seed) {
 }
 
 #endif
-
+}}

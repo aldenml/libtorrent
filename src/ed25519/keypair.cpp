@@ -3,9 +3,11 @@
 
 #include "libtorrent/ed25519.hpp"
 #include "libtorrent/hasher512.hpp"
-#include "ge.h"
+#include "libtorrent/ed25519/ge.hpp"
 
 using namespace libtorrent;
+
+namespace libtorrent { namespace ed25519 {
 
 void ed25519_create_keypair(unsigned char *public_key, unsigned char *private_key, const unsigned char *seed) {
     ge_p3 A;
@@ -19,3 +21,4 @@ void ed25519_create_keypair(unsigned char *public_key, unsigned char *private_ke
     ge_scalarmult_base(&A, private_key);
     ge_p3_tobytes(public_key, &A);
 }
+}}

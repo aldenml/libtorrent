@@ -3,7 +3,7 @@
 
 #include "libtorrent/export.hpp" // for TORRENT_EXPORT
 #include <stddef.h> // for size_t
-
+namespace libtorrent { namespace ed25519 {
 enum
 {
 	ed25519_seed_size = 32,
@@ -29,6 +29,6 @@ void TORRENT_EXPORT ed25519_add_scalar(unsigned char *public_key, unsigned char 
 void TORRENT_EXPORT ed25519_key_exchange(unsigned char *shared_secret, const unsigned char *public_key, const unsigned char *private_key);
 
 }
-
+}}
 #endif // ED25519_HPP
 

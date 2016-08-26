@@ -2,10 +2,10 @@
 #include "libtorrent/aux_/disable_warnings_push.hpp"
 
 #include "libtorrent/ed25519.hpp"
-#include "ge.h"
-#include "sc.h"
+#include "libtorrent/ed25519/ge.hpp"
+#include "libtorrent/ed25519/sc.hpp"
 
-
+namespace libtorrent { namespace ed25519 {
 /* see http://crypto.stackexchange.com/a/6215/4697 */
 void ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key, const unsigned char *scalar) {
     const unsigned char SC_1[32] = {1}; /* scalar with value 1 */
@@ -57,3 +57,4 @@ void ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key, c
         ge_p3_tobytes(public_key, &A);
     }
 }
+}}

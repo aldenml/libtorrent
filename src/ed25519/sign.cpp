@@ -3,10 +3,12 @@
 
 #include "libtorrent/ed25519.hpp"
 #include "libtorrent/hasher512.hpp"
-#include "ge.h"
-#include "sc.h"
+#include "libtorrent/ed25519/ge.hpp"
+#include "libtorrent/ed25519/sc.hpp"
 
 using namespace libtorrent;
+
+namespace libtorrent { namespace ed25519 {
 
 void ed25519_sign(unsigned char *signature, const unsigned char *message, size_t message_len, const unsigned char *public_key, const unsigned char *private_key) {
     ge_p3 R;
@@ -32,3 +34,4 @@ void ed25519_sign(unsigned char *signature, const unsigned char *message, size_t
         , private_key
         , reinterpret_cast<unsigned char*>(r.data()));
 }
+}}
