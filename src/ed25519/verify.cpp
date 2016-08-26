@@ -3,10 +3,12 @@
 
 #include "libtorrent/ed25519.hpp"
 #include "libtorrent/hasher512.hpp"
-#include "ge.h"
-#include "sc.h"
+#include "libtorrent/ed25519/ge.hpp"
+#include "libtorrent/ed25519/sc.hpp"
 
 using namespace libtorrent;
+
+namespace libtorrent { namespace ed25519 {
 
 static int consttime_equal(const unsigned char *x, const unsigned char *y) {
     unsigned char r = 0;
@@ -79,3 +81,4 @@ int ed25519_verify(const unsigned char *signature, const unsigned char *message,
 
     return 1;
 }
+}}

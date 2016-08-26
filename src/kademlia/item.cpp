@@ -106,7 +106,7 @@ bool verify_mutable_item(
 	char str[1200];
 	int len = canonical_string(v, seq, salt, str);
 
-	return ed25519_verify(reinterpret_cast<unsigned char const*>(sig.bytes.data())
+	return ed25519::ed25519_verify(reinterpret_cast<unsigned char const*>(sig.bytes.data())
 		, reinterpret_cast<unsigned char const*>(str)
 		, len
 		, reinterpret_cast<unsigned char const*>(pk.bytes.data())) == 1;
@@ -129,7 +129,7 @@ void sign_mutable_item(
 	char str[1200];
 	int const len = canonical_string(v, seq, salt, str);
 
-	ed25519_sign(reinterpret_cast<unsigned char*>(sig.bytes.data())
+	ed25519::ed25519_sign(reinterpret_cast<unsigned char*>(sig.bytes.data())
 		, reinterpret_cast<unsigned char const*>(str)
 		, len
 		, reinterpret_cast<unsigned char const*>(pk.bytes.data())

@@ -40,34 +40,30 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "test.hpp"
 
 using namespace libtorrent;
+using namespace libtorrent::ed25519;
 
 namespace
 {
-	void from_hex(std::string s, unsigned char* out)
-	{
-		aux::from_hex(s, reinterpret_cast<char*>(out));
-	}
-
 	void test_vector(std::string seed, std::string pub, std::string signature, std::string message)
 	{
-		unsigned char s[32];
-		unsigned char sk[64];
-		unsigned char pk[32];
-		unsigned char sig[64];
+		ed25519_seed s;
+		ed25519_private_key sk;
+		ed25519_public_key pk;
+		ed25519_signature sig;
 		int msg_size = int(message.size()) / 2;
 		std::vector<unsigned char> msg(msg_size);
 
-		from_hex(seed, s);
+		aux::from_hex(seed, s.data());
 		ed25519_create_keypair(pk, sk, s);
 
-		TEST_EQUAL(aux::to_hex({reinterpret_cast<char const*>(pk), 32}), pub);
+		TEST_EQUAL(aux::to_hex(pk), pub);
 
-		from_hex(message, msg.data());
-		ed25519_sign(sig, msg.data(), msg_size, pk, sk);
+		aux::from_hex(message, (char*)msg.data());
+		ed25519_sign((unsigned char*)sig.data(), msg.data(), msg_size, (unsigned char*)pk.data(), (unsigned char*)sk.data());
 
-		TEST_EQUAL(aux::to_hex({reinterpret_cast<char const*>(sig), 64}), signature);
+		TEST_EQUAL(aux::to_hex(sig), signature);
 
-		int r = ed25519_verify(sig, msg.data(), msg_size, pk);
+		int r = ed25519_verify((unsigned char*)sig.data(), msg.data(), msg_size, (unsigned char*)pk.data());
 
 		TEST_CHECK(r);
 	}
@@ -174,4 +170,32 @@ TORRENT_TEST(ed25519_test_vec1)
 	);
 }
 
+TORRENT_TEST(ed25519_create_seed)
+{
+	ed25519_seed s1;
+	ed25519_seed s2;
+	s1.fill(0);
+	s2.fill(0);
+
+	TEST_CHECK(s1 == s2);
+	ed25519_create_seed(s1);
+	ed25519_create_seed(s2);
+	TEST_CHECK(s1 != s2); // what are the odds
+
+	bool n1 = 0;
+	bool n2 = 0;
+	for (int i = 0; i < 32; i++)
+	{
+		if (s1[i] != 0) n1++;
+		if (s2[i] != 0) n2++;
+	}
+	TEST_CHECK(n1 > 0);
+	TEST_CHECK(n2 > 0);
+}
+
+#else
+TORRENT_TEST(empty)
+{
+	TEST_CHECK(true);
+}
 #endif // TORRENT_DISABLE_DHT

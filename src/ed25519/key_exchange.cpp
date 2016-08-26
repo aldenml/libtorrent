@@ -2,7 +2,9 @@
 #include "libtorrent/aux_/disable_warnings_push.hpp"
 
 #include "libtorrent/ed25519.hpp"
-#include "fe.h"
+#include "libtorrent/ed25519/fe.hpp"
+
+namespace libtorrent { namespace ed25519 {
 
 void ed25519_key_exchange(unsigned char *shared_secret
 	, const unsigned char *public_key, const unsigned char *private_key) {
@@ -81,3 +83,4 @@ void ed25519_key_exchange(unsigned char *shared_secret
     fe_mul(x2, x2, z2);
     fe_tobytes(shared_secret, x2);
 }
+}}
