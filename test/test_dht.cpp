@@ -1057,8 +1057,7 @@ void test_put(address(&rand_addr)())
 		ed25519_seed seed;
 		ed25519_create_seed(seed);
 
-		ed25519_create_keypair((unsigned char*)pk.bytes.data()
-			, (unsigned char*)sk.bytes.data(), (unsigned char*)seed.data());
+		ed25519_create_keypair(pk.bytes, sk.bytes, seed);
 		std::fprintf(stderr, "pub: %s priv: %s\n"
 			, aux::to_hex(pk.bytes).c_str()
 			, aux::to_hex(sk.bytes).c_str());

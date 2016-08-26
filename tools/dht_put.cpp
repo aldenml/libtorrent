@@ -150,8 +150,8 @@ int dump_key(char *filename)
 		return 1;
 	}
 
-	unsigned char seed[32];
-	int size = int(fread(seed, 1, 32, f));
+	std::array<char, 32> seed;
+	int size = int(fread(seed.data(), 1, 32, f));
 	if (size != 32)
 	{
 		std::fprintf(stderr, "invalid key file.\n");
@@ -161,8 +161,7 @@ int dump_key(char *filename)
 
 	std::array<char, 32> pk;
 	std::array<char, 64> sk;
-	ed25519_create_keypair((unsigned char*)pk.data()
-		, (unsigned char*)sk.data(), seed);
+	ed25519_create_keypair(pk, sk, seed);
 
 	std::printf("public key: %s\nprivate key: %s\n"
 		, to_hex(pk).c_str()
@@ -347,8 +346,8 @@ int main(int argc, char* argv[])
 			return 1;
 		}
 
-		unsigned char seed[32];
-		fread(seed, 1, 32, f);
+		std::array<char, 32> seed;
+		fread(seed.data(), 1, 32, f);
 		std::fclose(f);
 
 		++argv;
@@ -357,8 +356,7 @@ int main(int argc, char* argv[])
 
 		std::array<char, 32> public_key;
 		std::array<char, 64> private_key;
-		ed25519_create_keypair((unsigned char*)public_key.data()
-			, (unsigned char*)private_key.data(), seed);
+		ed25519_create_keypair(public_key, private_key, seed);
 
 		bootstrap(s);
 		s.dht_put_item(public_key, std::bind(&put_string, _1, _2, _3, _4
