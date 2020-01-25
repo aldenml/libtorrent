@@ -101,7 +101,7 @@ build_script:
   # and stage it for cmake to pick up
   - if defined cmake (
     cd %BOOST_ROOT% &&
-    bjam cxxstd=14 release --with-python --with-system --layout=system address-model=64 link=shared stage &&
+    b2.exe cxxstd=14 release --with-python --with-system --layout=system address-model=64 link=shared stage &&
     cd %ROOT_DIRECTORY% &&
     mkdir build &&
     cd build &&
