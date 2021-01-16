@@ -106,7 +106,7 @@ upnp::upnp(io_context& ios
 	, m_listen_handle(std::move(ls))
 {
 #if TORRENT_USE_SSL
-	m_ssl_ctx.set_verify_mode(ssl::context::verify_none);
+	m_ssl_ctx.set_verify_mode(aux::ssl::context::verify_none);
 #endif
 }
 
